@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fio-test
+spec:
+  containers:
+    - name: fio
+      image: nixery.dev/fio
+      command:
+        - fio
+        - --name=test
+        - --ioengine=libaio
+        - --rw=randrw
+        - --bs=4k
+        - --direct=1
+        - --size=1G
+        - --numjobs=4
+        - --runtime=60
+        - --group_reporting
+      volumeMounts:
+        - name: data
+          mountPath: /data
+      workingDir: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: fio-pvc
+  restartPolicy: Never
