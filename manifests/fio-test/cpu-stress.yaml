@@ -6,14 +6,13 @@ metadata:
 spec:
   containers:
     - name: stress
-      image: alexeiled/stress-ng
-      command:
-        - stress-ng
+      image: lorel/docker-stress-ng
+      args:
         - --cpu
         - '4'
         - --cpu-method
         - matrixprod
         - --metrics-brief
         - --timeout
-        - '60'
+        - 60s
   restartPolicy: Never
