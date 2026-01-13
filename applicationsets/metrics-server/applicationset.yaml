@@ -20,7 +20,7 @@ spec:
         server: '{{server}}'
         namespace: kube-system
       sources:
-        - repoURL: https://github.com/YOUR_ORG/argocd-cluster-essentials.git
+        - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
           targetRevision: main
           ref: values
         - repoURL: https://kubernetes-sigs.github.io/metrics-server
