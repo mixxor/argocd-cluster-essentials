@@ -1,0 +1,49 @@
+---
+# Gatus configuration
+replicaCount: 1
+image:
+  tag: v5.34.0
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: status.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  seccompProfile:
+    type: RuntimeDefault
+containerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+# Gatus configuration
+config:
+  storage:
+    type: sqlite
+    path: /data/data.db
+  endpoints:
+    - name: Example
+      group: external
+      url: https://example.com
+      interval: 5m
+      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 1000']
+persistence:
+  enabled: true
+  size: 1Gi
+  accessModes: [ReadWriteOnce]
