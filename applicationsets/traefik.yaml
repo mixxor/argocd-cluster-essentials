@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: traefik
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '1'
+spec:
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-traefik'
+      annotations:
+        argocd.argoproj.io/sync-wave: '1'
+    spec:
+      project: default
+      destination:
+        server: '{{server}}'
+        namespace: traefik
+      sources:
+        - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
+          targetRevision: main
+          ref: values
+        - repoURL: https://traefik.github.io/charts
+          chart: traefik
+          targetRevision: 38.0.2
+          helm:
+            releaseName: traefik
+            valueFiles: [$values/values/traefik/values-basic.yaml]
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions: [CreateNamespace=true, ServerSideApply=true]
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
