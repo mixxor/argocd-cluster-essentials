@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cpu-stress
+spec:
+  containers:
+    - name: stress
+      image: alexeiled/stress-ng
+      command:
+        - stress-ng
+        - --cpu
+        - '4'
+        - --cpu-method
+        - matrixprod
+        - --metrics-brief
+        - --timeout
+        - '60'
+  restartPolicy: Never
