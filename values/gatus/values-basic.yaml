@@ -8,12 +8,10 @@ service:
   port: 80
 ingress:
   enabled: true
-  className: traefik
-  hosts:
-    - host: status.example.com
-      paths:
-        - path: /
-          pathType: Prefix
+  ingressClassName: traefik
+  path: /
+  pathType: Prefix
+  hosts: [status.example.com]
 resources:
   requests:
     cpu: 50m
