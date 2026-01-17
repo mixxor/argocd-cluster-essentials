@@ -45,16 +45,25 @@ config:
       url: https://vault.infomaniak.moebi.io
       interval: 1m
       conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+      ui:
+        hide-url: true
+        hide-hostname: true
     - name: ArgoCD
       group: infrastructure
       url: https://argocd.infomaniak.moebi.io
       interval: 1m
       conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+      ui:
+        hide-url: true
+        hide-hostname: true
     - name: Gatus
       group: infrastructure
       url: https://status.infomaniak.moebi.io
       interval: 1m
       conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+      ui:
+        hide-url: true
+        hide-hostname: true
 persistence:
   enabled: true
   size: 1Gi
