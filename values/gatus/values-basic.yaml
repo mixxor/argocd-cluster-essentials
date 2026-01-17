@@ -13,10 +13,10 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   path: /
   pathType: Prefix
-  hosts: [gatus.infomaniak.moebi.io]
+  hosts: [status.infomaniak.moebi.io]
   tls:
     - secretName: gatus-tls
-      hosts: [gatus.infomaniak.moebi.io]
+      hosts: [status.infomaniak.moebi.io]
 resources:
   requests:
     cpu: 50m
@@ -52,7 +52,7 @@ config:
       conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
     - name: Gatus
       group: infrastructure
-      url: https://gatus.infomaniak.moebi.io
+      url: https://status.infomaniak.moebi.io
       interval: 1m
       conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
 persistence:
