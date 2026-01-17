@@ -28,3 +28,4 @@ spec:
     className: traefik
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
+    tlsSecret: keycloak-tls
