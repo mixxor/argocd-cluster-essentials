@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: vault
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '2'
+spec:
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-vault'
+      annotations:
+        argocd.argoproj.io/sync-wave: '2'
+    spec:
+      project: default
+      destination:
+        server: '{{server}}'
+        namespace: vault
+      sources:
+        - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
+          targetRevision: main
+          ref: values
+        - repoURL: https://helm.releases.hashicorp.com
+          chart: vault
+          targetRevision: 0.32.0
+          helm:
+            releaseName: vault
+            valueFiles: [$values/values/vault/values-basic.yaml]
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions: [CreateNamespace=true, ServerSideApply=true]
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
