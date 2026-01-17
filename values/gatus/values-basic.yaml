@@ -9,9 +9,14 @@ service:
 ingress:
   enabled: true
   ingressClassName: traefik
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   path: /
   pathType: Prefix
-  hosts: [status.example.com]
+  hosts: [gatus.infomaniak.moebi.io]
+  tls:
+    - secretName: gatus-tls
+      hosts: [gatus.infomaniak.moebi.io]
 resources:
   requests:
     cpu: 50m
@@ -30,17 +35,26 @@ containerSecurityContext:
   readOnlyRootFilesystem: true
   capabilities:
     drop: [ALL]
-# Gatus configuration
 config:
   storage:
     type: sqlite
     path: /data/data.db
   endpoints:
-    - name: Example
-      group: external
-      url: https://example.com
-      interval: 5m
-      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 1000']
+    - name: Vault
+      group: infrastructure
+      url: https://vault.infomaniak.moebi.io
+      interval: 1m
+      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+    - name: ArgoCD
+      group: infrastructure
+      url: https://argocd.infomaniak.moebi.io
+      interval: 1m
+      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+    - name: Gatus
+      group: infrastructure
+      url: https://gatus.infomaniak.moebi.io
+      interval: 1m
+      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
 persistence:
   enabled: true
   size: 1Gi

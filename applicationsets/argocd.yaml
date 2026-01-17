@@ -1,0 +1,42 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
+spec:
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-argocd'
+      annotations:
+        argocd.argoproj.io/sync-wave: '0'
+    spec:
+      project: default
+      destination:
+        server: '{{server}}'
+        namespace: argocd
+      sources:
+        - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
+          targetRevision: main
+          ref: values
+        - repoURL: https://argoproj.github.io/argo-helm
+          chart: argo-cd
+          targetRevision: 9.3.1
+          helm:
+            releaseName: argocd
+            valueFiles: [$values/values/argocd/values-basic.yaml]
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions: [CreateNamespace=true, ServerSideApply=true]
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

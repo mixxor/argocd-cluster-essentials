@@ -14,6 +14,8 @@ server:
     ingressClassName: traefik
     pathType: Prefix
     activeService: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
       - host: vault.infomaniak.moebi.io
     tls:

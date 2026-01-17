@@ -1,0 +1,15 @@
+---
+# ArgoCD configuration
+configs:
+  params:
+    server.insecure: true
+server:
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hostname: argocd.infomaniak.moebi.io
+    tls: true
