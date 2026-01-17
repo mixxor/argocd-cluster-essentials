@@ -18,7 +18,7 @@ spec:
       project: default
       destination:
         server: '{{server}}'
-        namespace: keycloak-operator
+        namespace: keycloak
       sources:
         - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
           targetRevision: main

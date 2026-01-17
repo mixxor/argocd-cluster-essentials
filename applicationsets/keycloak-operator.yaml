@@ -18,7 +18,7 @@ spec:
       project: default
       destination:
         server: '{{server}}'
-        namespace: keycloak-operator
+        namespace: keycloak
       sources:
         # Official Keycloak Operator manifests from upstream
         - repoURL: https://github.com/keycloak/keycloak-k8s-resources.git
