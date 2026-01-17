@@ -64,6 +64,14 @@ config:
       ui:
         hide-url: true
         hide-hostname: true
+    - name: Keycloak
+      group: infrastructure
+      url: https://keycloak.infomaniak.moebi.io
+      interval: 1m
+      conditions: ['[STATUS] == 200', '[RESPONSE_TIME] < 2000']
+      ui:
+        hide-url: true
+        hide-hostname: true
 persistence:
   enabled: true
   size: 1Gi

@@ -1,0 +1,10 @@
+---
+# EPAM Keycloak Config Operator connection
+apiVersion: v1.edp.epam.com/v1
+kind: Keycloak
+metadata:
+  name: keycloak
+  namespace: keycloak
+spec:
+  url: https://keycloak.infomaniak.moebi.io
+  secret: keycloak-initial-admin

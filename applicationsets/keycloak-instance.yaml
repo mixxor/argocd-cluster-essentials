@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: keycloak-instance
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '3'
+spec:
+  generators:
+    - clusters: {}
+  template:
+    metadata:
+      name: '{{name}}-keycloak-instance'
+      annotations:
+        argocd.argoproj.io/sync-wave: '3'
+    spec:
+      project: default
+      destination:
+        server: '{{server}}'
+        namespace: keycloak
+      sources:
+        - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
+          targetRevision: main
+          path: manifests/keycloak
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions: [CreateNamespace=true, ServerSideApply=true]
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m

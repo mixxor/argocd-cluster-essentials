@@ -1,0 +1,33 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-db
+  namespace: keycloak
+spec:
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.6
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  postgresql:
+    parameters:
+      max_connections: '100'
+      shared_buffers: 128MB
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: keycloak
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  monitoring:
+    enablePodMonitor: false
