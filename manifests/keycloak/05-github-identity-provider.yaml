@@ -31,8 +31,8 @@ spec:
   storeToken: true
   firstBrokerLoginFlowAlias: first broker login
   config:
-    clientId: secret-ref:github-oauth-credentials:clientId
-    clientSecret: secret-ref:github-oauth-credentials:clientSecret
+    clientId: $github-oauth-credentials:clientId
+    clientSecret: $github-oauth-credentials:clientSecret
     defaultScope: user:email read:org
     syncMode: IMPORT
   mappers:
