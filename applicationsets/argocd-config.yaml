@@ -2,41 +2,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: external-secrets
+  name: argocd-config
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: '1'
+    argocd.argoproj.io/sync-wave: '2'
 spec:
   generators:
     - clusters: {}
   template:
     metadata:
-      name: '{{name}}-external-secrets'
+      name: '{{name}}-argocd-config'
       annotations:
-        argocd.argoproj.io/sync-wave: '1'
+        argocd.argoproj.io/sync-wave: '2'
     spec:
       project: default
       destination:
         server: '{{server}}'
-        namespace: external-secrets
+        namespace: argocd
       sources:
         - repoURL: https://github.com/mixxor/argocd-cluster-essentials.git
           targetRevision: main
-          ref: values
-        - repoURL: https://charts.external-secrets.io
-          chart: external-secrets
-          targetRevision: 1.2.1
-          helm:
-            releaseName: external-secrets
-            valueFiles: [$values/values/external-secrets/values-basic.yaml]
+          path: manifests/argocd
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-          - ServerSideApply=true
-          - SkipDryRunOnMissingResource=true
+        syncOptions: [CreateNamespace=true, ServerSideApply=true]
         retry:
           limit: 5
           backoff:

@@ -1,8 +1,25 @@
 ---
-# ArgoCD configuration
+# ArgoCD configuration with Keycloak OIDC
 configs:
   params:
     server.insecure: true
+  cm:
+    url: https://argocd.infomaniak.moebi.io
+    oidc.config: |
+      name: Keycloak
+      issuer: https://keycloak.infomaniak.moebi.io/realms/moebiuscloud
+      clientID: argocd
+      clientSecret: $oidc.keycloak.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
+  rbac:
+    policy.csv: |
+      # Grant admin to moebiuscloud-members group
+      g, moebiuscloud-members, role:admin
+    policy.default: role:readonly
+    scopes: '[groups]'
+  secret:
+    extra:
+      oidc.keycloak.clientSecret: $argocd-oidc-client-secret:clientSecret
 server:
   service:
     type: ClusterIP
