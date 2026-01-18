@@ -5,7 +5,7 @@ metadata:
   name: keycloak-instance
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: '3'
+    argocd.argoproj.io/sync-wave: '4'
 spec:
   generators:
     - clusters: {}
@@ -13,7 +13,7 @@ spec:
     metadata:
       name: '{{name}}-keycloak-instance'
       annotations:
-        argocd.argoproj.io/sync-wave: '3'
+        argocd.argoproj.io/sync-wave: '4'
     spec:
       project: default
       destination:

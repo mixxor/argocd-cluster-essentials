@@ -1,7 +1,6 @@
 ---
-# Example: ArgoCD OIDC Client with group-based access
+# ArgoCD OIDC Client with group-based access
 # This client allows ArgoCD users to authenticate via Keycloak
-# Only users in the moebiuscloud-members group will have access
 apiVersion: v1.edp.epam.com/v1
 kind: KeycloakClient
 metadata:
@@ -16,14 +15,13 @@ spec:
   enabled: true
   clientAuthenticatorType: client-secret
   protocol: openid-connect
-  publicClient: false
+  public: false
   standardFlowEnabled: true
-  directAccessGrantsEnabled: false
-  serviceAccountsEnabled: false
-  secret: argocd-client-secret
+  directAccess: false
+  secret: argocd-client-secret:clientSecret
   webUrl: https://argocd.infomaniak.moebi.io
   redirectUris: [https://argocd.infomaniak.moebi.io/auth/callback]
-  defaultClientScopes: [openid, profile, email, groups]
+  defaultClientScopes: [openid, profile, email]
   protocolMappers:
     - name: groups
       protocol: openid-connect
