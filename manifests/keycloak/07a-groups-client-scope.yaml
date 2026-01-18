@@ -1,0 +1,24 @@
+---
+# Groups client scope for passing group membership to clients
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakClientScope
+metadata:
+  name: groups
+  namespace: keycloak
+spec:
+  realmRef:
+    name: moebiuscloud
+    kind: KeycloakRealm
+  name: groups
+  description: Group membership
+  protocol: openid-connect
+  protocolMappers:
+    - name: groups
+      protocol: openid-connect
+      protocolMapper: oidc-group-membership-mapper
+      config:
+        full.path: 'false'
+        id.token.claim: 'true'
+        access.token.claim: 'true'
+        claim.name: groups
+        userinfo.token.claim: 'true'
