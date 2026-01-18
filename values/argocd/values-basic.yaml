@@ -16,9 +16,8 @@ configs:
       g, moebiuscloud-members, role:admin
     policy.default: role:readonly
     scopes: '[groups]'
-  secret:
-    extra:
-      oidc.keycloak.clientSecret: $argocd-oidc-client-secret:clientSecret
+  # Secret is managed by ExternalSecret (argocd-oidc-client-secret)
+  # which merges oidc.keycloak.clientSecret into argocd-secret
 server:
   service:
     type: ClusterIP
