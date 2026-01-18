@@ -1,0 +1,44 @@
+---
+# GitHub Identity Provider for moebiuscloud organization
+#
+# IMPORTANT: Keycloak doesn't have built-in GitHub org restriction.
+# Organization access is controlled via:
+# 1. Users authenticate with GitHub
+# 2. Only users in the "moebiuscloud-members" group can access applications
+# 3. Manually add authorized org members to this group, or
+# 4. Use the post-broker login flow to require admin approval
+#
+# To create a GitHub OAuth App:
+# 1. Go to: https://github.com/organizations/moebiuscloud/settings/applications
+# 2. Click "New OAuth App"
+# 3. Set Homepage URL: https://keycloak.infomaniak.moebi.io
+# 4. Set Callback URL: https://keycloak.infomaniak.moebi.io/realms/moebiuscloud/broker/github/endpoint
+# 5. Copy Client ID and Client Secret to the github-oauth-credentials secret
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmIdentityProvider
+metadata:
+  name: github
+  namespace: keycloak
+spec:
+  realmRef:
+    name: moebiuscloud
+    kind: KeycloakRealm
+  alias: github
+  providerId: github
+  displayName: Sign in with GitHub
+  enabled: true
+  trustEmail: true
+  storeToken: true
+  firstBrokerLoginFlowAlias: first broker login
+  config:
+    clientId: secret-ref:github-oauth-credentials:clientId
+    clientSecret: secret-ref:github-oauth-credentials:clientSecret
+    defaultScope: user:email read:org
+    syncMode: IMPORT
+  mappers:
+    - name: github-username
+      identityProviderMapper: github-user-attribute-mapper
+      config:
+        syncMode: INHERIT
+        jsonField: login
+        userAttribute: github_username

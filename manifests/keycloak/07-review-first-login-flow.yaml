@@ -1,0 +1,32 @@
+---
+# Custom first broker login flow with review required
+# This flow requires admin approval before new users can access applications
+# New users who authenticate via GitHub will be in "pending" status until approved
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakAuthFlow
+metadata:
+  name: github-first-login-review
+  namespace: keycloak
+spec:
+  realmRef:
+    name: moebiuscloud
+    kind: KeycloakRealm
+  alias: github-first-login-review
+  description: First broker login with review required for GitHub users
+  providerId: basic-flow
+  topLevel: true
+  builtIn: false
+  authenticationExecutions:
+    - authenticator: idp-review-profile
+      requirement: REQUIRED
+      priority: 10
+      authenticatorConfig:
+        alias: review-profile-config
+        config:
+          update.profile.on.first.login: 'on'
+    - authenticator: idp-create-user-if-unique
+      requirement: ALTERNATIVE
+      priority: 20
+    - authenticator: idp-confirm-link
+      requirement: ALTERNATIVE
+      priority: 30

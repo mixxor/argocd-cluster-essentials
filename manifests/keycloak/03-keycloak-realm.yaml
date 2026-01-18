@@ -1,0 +1,11 @@
+---
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealm
+metadata:
+  name: moebiuscloud
+  namespace: keycloak
+spec:
+  realmName: moebiuscloud
+  keycloakRef:
+    name: keycloak
+    kind: Keycloak

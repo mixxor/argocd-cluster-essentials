@@ -1,0 +1,13 @@
+---
+# Group for authorized moebiuscloud organization members
+# Add GitHub users to this group to grant them access to applications
+apiVersion: v1.edp.epam.com/v1
+kind: KeycloakRealmGroup
+metadata:
+  name: moebiuscloud-members
+  namespace: keycloak
+spec:
+  name: moebiuscloud-members
+  realmRef:
+    name: moebiuscloud
+    kind: KeycloakRealm

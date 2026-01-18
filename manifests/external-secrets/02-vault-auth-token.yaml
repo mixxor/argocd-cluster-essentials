@@ -1,0 +1,10 @@
+---
+# Long-lived token for Vault Kubernetes auth
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-auth-token
+  namespace: external-secrets
+  annotations:
+    kubernetes.io/service-account.name: vault-auth
+type: kubernetes.io/service-account-token
