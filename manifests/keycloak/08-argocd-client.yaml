@@ -18,7 +18,7 @@ spec:
   public: false
   standardFlowEnabled: true
   directAccess: false
-  secret: argocd-client-secret:clientSecret
+  secret: $argocd-client-secret:clientSecret
   webUrl: https://argocd.infomaniak.moebi.io
   redirectUris: [https://argocd.infomaniak.moebi.io/auth/callback]
   defaultClientScopes: [openid, profile, email]
