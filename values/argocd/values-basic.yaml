@@ -10,7 +10,6 @@ configs:
       issuer: https://keycloak.infomaniak.moebi.io/realms/moebiuscloud
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
-      requestedScopes: ["openid", "profile", "email", "groups"]
   rbac:
     policy.csv: |
       # Grant admin to moebiuscloud-members group
