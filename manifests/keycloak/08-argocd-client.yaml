@@ -22,6 +22,7 @@ spec:
   webUrl: https://argocd.infomaniak.moebi.io
   redirectUris: [https://argocd.infomaniak.moebi.io/auth/callback]
   fullScopeAllowed: true
+  defaultClientScopes: [basic, profile, email, groups]
   protocolMappers:
     - name: groups
       protocol: openid-connect
