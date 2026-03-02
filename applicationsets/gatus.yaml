@@ -25,7 +25,7 @@ spec:
           ref: values
         - repoURL: https://twin.github.io/helm-charts
           chart: gatus
-          targetRevision: 1.4.4
+          targetRevision: 1.5.0
           helm:
             releaseName: gatus
             valueFiles: [$values/values/gatus/values-basic.yaml]
