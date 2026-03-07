@@ -25,7 +25,7 @@ spec:
           ref: values
         - repoURL: https://epam.github.io/edp-helm-charts/stable
           chart: keycloak-operator
-          targetRevision: 1.31.1
+          targetRevision: 1.32.0
           helm:
             releaseName: keycloak-config-operator
             valueFiles: [$values/values/keycloak-config-operator/values-basic.yaml]
