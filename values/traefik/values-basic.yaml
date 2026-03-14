@@ -21,8 +21,9 @@ ports:
       default: true
     exposedPort: 443
     protocol: TCP
-    tls:
-      enabled: true
+    http:
+      tls:
+        enabled: true
 # Ingress class
 ingressClass:
   enabled: true
@@ -40,13 +41,13 @@ resources:
     cpu: 500m
     memory: 256Mi
 # Security context
-securityContext:
+podSecurityContext:
   runAsNonRoot: true
   runAsUser: 65532
   runAsGroup: 65532
   seccompProfile:
     type: RuntimeDefault
-containerSecurityContext:
+securityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
   capabilities:
