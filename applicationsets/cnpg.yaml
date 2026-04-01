@@ -25,7 +25,7 @@ spec:
           ref: values
         - repoURL: https://cloudnative-pg.github.io/charts
           chart: cloudnative-pg
-          targetRevision: 0.27.1
+          targetRevision: 0.28.0
           helm:
             releaseName: cnpg
             valueFiles: [$values/values/cnpg/values-basic.yaml]
