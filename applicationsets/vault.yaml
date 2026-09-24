@@ -25,7 +25,7 @@ spec:
           ref: values
         - repoURL: https://helm.releases.hashicorp.com
           chart: vault
-          targetRevision: 0.32.0
+          targetRevision: 0.34.1
           helm:
             releaseName: vault
             valueFiles: [$values/values/vault/values-basic.yaml]
